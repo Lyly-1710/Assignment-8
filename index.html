@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    
 </head>
 <body>
   <div class="main">
@@ -41,7 +42,6 @@
   <script>
 
     document.addEventListener('DOMContentLoaded', function () {
-      // Mong muốn của chúng ta
       Validator({
         form: '#form-1',
         formGroupSelector: '.form-group',
@@ -51,13 +51,9 @@
           Validator.isEmail('#email'),
           Validator.minLength('#password', 6),
           Validator.isRequired('#password_confirmation'),
-          Validator.isConfirmed('#password_confirmation', function () {
-            return document.querySelector('#form-1 #password').value;
-          }, 'Mật khẩu nhập lại không chính xác')
         ],
-        onSubmit: function (data) {
-          // Call API
-          console.log(data);
+        onSubmit: function () {
+          alert("Đăng ký thành công");
         }
       });
 

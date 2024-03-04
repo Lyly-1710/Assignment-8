@@ -66,7 +66,7 @@ html {
 }
 
 .form-control:hover {
-    border-color: #1dbfaf;
+    border-color: black;
 }
 
 .form-group.invalid .form-control {
@@ -85,6 +85,7 @@ html {
 
 .form-submit {
     outline: none;
+    background-color: black;
     margin-top: 12px;
     padding: 12px 16px;
     font-weight: 600;
@@ -97,7 +98,7 @@ html {
 }
 
 .form-submit:hover {
-    background-color: #1ac7b6;
+    background-color: black;
 }
 
 .spacer {
