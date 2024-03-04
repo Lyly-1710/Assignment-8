@@ -8,96 +8,61 @@
 </head>
 <body>
   <div class="main">
+
     <form action="" method="POST" class="form" id="form-1">
       <h3 class="heading">Form đăng ký</h3>
+
       <div class="spacer"></div>
+
       <div class="form-group">
         <label for="fullname" class="form-label">Tên đầy đủ</label>
-        <input id="fullname" name="fullname" type="text" placeholder="VD: Sơn Đặng" class="form-control">
+        <input id="fullname" name="fullname" type="text" placeholder="Họ và tên" class="form-control">
         <span class="form-message"></span>
       </div>
-      <button class="form-submit" onclick="validateForm()">Đăng ký</button>
-    </form>
-  </div>
 
+      <div class="form-group">
+        <label for="email" class="form-label">Email</label>
+        <input id="email" name="email" type="text" placeholder="Email" class="form-control">
+        <span class="form-message"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="form-label">Mật khẩu</label>
+        <input id="password" name="password" type="password" placeholder="Mật khẩu" class="form-control">
+        <span class="form-message"></span>
+      </div>
+
+
+      <button class="form-submit">Đăng ký</button>
+    </form>
+
+  </div>
+  
   <script>
+
     document.addEventListener('DOMContentLoaded', function () {
+      // Mong muốn của chúng ta
       Validator({
         form: '#form-1',
         formGroupSelector: '.form-group',
         errorSelector: '.form-message',
         rules: [
-          Validator.isRequired('#fullname', 'Vui lòng nhập tên đầy đủ của bạn')
+          Validator.isRequired('#fullname', 'Vui lòng nhập tên đầy đủ của bạn'),
+          Validator.isEmail('#email'),
+          Validator.minLength('#password', 6),
+          Validator.isRequired('#password_confirmation'),
+          Validator.isConfirmed('#password_confirmation', function () {
+            return document.querySelector('#form-1 #password').value;
+          }, 'Mật khẩu nhập lại không chính xác')
         ],
         onSubmit: function (data) {
-          alert("Đăng ký thành công");
-
-          // Ngăn chặn chuyển hướng mặc định của biểu mẫu
-          return false;
+          // Call API
+          console.log(data);
         }
       });
+
     });
 
-    function validateForm() {
-      var formElement = document.querySelector('#form-1');
-      var isFormValid = true;
-
-      // Đặt màu border-color về trạng thái ban đầu cho tất cả các input
-      formElement.querySelectorAll('[name]').forEach(function (input) {
-        input.style.borderColor = '';
-      });
-
-      options.rules.forEach(function (rule) {
-        var inputElement = formElement.querySelector(rule.selector);
-        var isValid = validate(inputElement, rule);
-        
-        if (!isValid) {
-          isFormValid = false;
-          // Hiển thị border-color đỏ cho input không hợp lệ
-          inputElement.style.borderColor = 'red';
-        }
-      });
-
-      if (isFormValid) {
-        // Trường hợp submit với javascript
-        if (typeof options.onSubmit === 'function') {
-          var enableInputs = formElement.querySelectorAll('[name]');
-          var formValues = Array.from(enableInputs).reduce(function (values, input) {
-            switch(input.type) {
-              case 'radio':
-                values[input.name] = formElement.querySelector('input[name="' + input.name + '"]:checked').value;
-                break;
-              case 'checkbox':
-                if (!input.matches(':checked')) {
-                  values[input.name] = '';
-                  return values;
-                }
-                if (!Array.isArray(values[input.name])) {
-                  values[input.name] = [];
-                }
-                values[input.name].push(input.value);
-                break;
-              case 'file':
-                values[input.name] = input.files;
-                break;
-              default:
-                values[input.name] = input.value;
-            }
-            return values;
-          }, {});
-          options.onSubmit(formValues);
-
-          // Ngăn chặn chuyển hướng mặc định của biểu mẫu
-          return false;
-        } else {
-          // Trường hợp submit với hành vi mặc định
-          formElement.submit();
-        }
-      }
-
-      // Ngăn chặn chuyển hướng mặc định của biểu mẫu nếu có lỗi
-      return false;
-    }
   </script>
   <script src="E:\Day 8\main.js"></script>
 </body>
